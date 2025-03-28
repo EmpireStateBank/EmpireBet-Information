@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Profiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .profile-card {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        .profile-card h2 {
+            color: #333;
+        }
+        .profile-card p {
+            color: #555;
+        }
+        .profile-card .withdraw-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .login-form input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+        }
+        .login-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Enter Account ID</h2>
+        <input type="text" id="accountIdInput" placeholder="Account ID">
+        <button onclick="authenticate()">Submit</button>
+    </div>
+
+    <div class="profile-card" id="profile010541">
+        <h2>Account Profile</h2>
+        <p><strong>Account ID:</strong> 010541</p>
+        <p><strong>Account Name:</strong> Name Placeholder</p>
+        <p><strong>Token:</strong> 1/30</p>
+        <p><strong>Total Amount:</strong> ₦10,000</p>
+        <p><strong>Total Withdrawals:</strong> 0</p>
+        <p><strong>Balance:</strong> ₦10,000</p>
+        <a href="https://example.com/withdraw?account=010541" class="withdraw-btn">Withdraw Token</a>
+    </div>
+
+    <div class="profile-card" id="profile057801">
+        <h2>Account Profile</h2>
+        <p><strong>Account ID:</strong> 057801</p>
+        <p><strong>Account Name:</strong> Name Placeholder</p>
+        <p><strong>Token:</strong> 1/30</p>
+        <p><strong>Total Amount:</strong> ₦10,000</p>
+        <p><strong>Total Withdrawals:</strong> 0</p>
+        <p><strong>Balance:</strong> ₦10,000</p>
+        <a href="https://example.com/withdraw?account=057801" class="withdraw-btn">Withdraw Token</a>
+    </div>
+
+    <div class="profile-card" id="profile113075">
+        <h2>Account Profile</h2>
+        <p><strong>Account ID:</strong> 113075</p>
+        <p><strong>Account Name:</strong> Name Placeholder</p>
+        <p><strong>Token:</strong> 1/30</p>
+        <p><strong>Total Amount:</strong> ₦10,000</p>
+        <p><strong>Total Withdrawals:</strong> 0</p>
+        <p><strong>Balance:</strong> ₦10,000</p>
+        <a href="https://example.com/withdraw?account=113075" class="withdraw-btn">Withdraw Token</a>
+    </div>
+
+    <script>
+        function authenticate() {
+            const accountId = document.getElementById('accountIdInput').value;
+            const profiles = document.querySelectorAll('.profile-card');
+            profiles.forEach(profile => profile.style.display = 'none');
+
+            const profileCard = document.getElementById(`profile${accountId}`);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                document.querySelector('.login-form').style.display = 'none';
+            } else {
+                alert('Invalid Account ID');
+            }
+        }
+    </script>
+</body>
+</html>
