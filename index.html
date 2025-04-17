@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Match Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .team-stats {
+            margin-bottom: 20px;
+        }
+        label {
+            display: inline-block;
+            width: 260px;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            width: calc(100% - 280px);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .prediction-result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e8f5e9;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 0;
+            color: #777;
+            font-size: 14px;
+        }
+        #pin-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #pin-container input {
+            width: 100px;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Soccer Match Prediction</h1>
+    </header>
+    <div class="container">
+        <div id="pin-container">
+            <h2>Enter PIN to Access</h2>
+            <input type="password" id="pin-input" maxlength="4" placeholder="PIN">
+            <button onclick="unlock()">Unlock</button>
+            <p id="pin-error" style="color: red; display: none;">Incorrect PIN. Try again.</p>
+        </div>
+
+        <div id="prediction-container" style="display: none;">
+            <div class="team-stats">
+                <h2>Team A Stats</h2>
+                <label for="teamA-goals">Goals scored in last 15 games:</label>
+                <input type="number" id="teamA-goals" placeholder="Enter goals scored" required><br>
+                <label for="teamA-goals-conceded">Goals conceded in last 15 games:</label>
+                <input type="number" id="teamA-goals-conceded" placeholder="Enter goals conceded" required><br>
+                <label for="teamA-percentage">Percentage of matches with 3+ goals:</label>
+                <input type="number" id="teamA-percentage" step="0.01" placeholder="Enter percentage" required><br>
+                <label for="teamA-tmp">TMP point:</label>
+                <input type="number" id="teamA-tmp" step="0.01" placeholder="Enter TMP points" required><br>
+            </div>
+
+            <div class="team-stats">
+                <h2>Team B Stats</h2>
+                <label for="teamB-goals">Goals scored in last 15 games:</label>
+                <input type="number" id="teamB-goals" placeholder="Enter goals scored" required><br>
+                <label for="teamB-goals-conceded">Goals conceded in last 15 games:</label>
+                <input type="number" id="teamB-goals-conceded" placeholder="Enter goals conceded" required><br>
+                <label for="teamB-percentage">Percentage of matches with 3+ goals:</label>
+                <input type="number" id="teamB-percentage" step="0.01" placeholder="Enter percentage" required><br>
+                <label for="teamB-tmp">TMP point:</label>
+                <input type="number" id="teamB-tmp" step="0.01" placeholder="Enter TMP points" required><br>
+            </div>
+
+            <button onclick="predict()">Predict</button>
+
+            <div class="prediction-result" id="prediction-result">
+                <!-- Prediction result will appear here -->
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Soccer Match Predictor. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const PIN = "3572"; // Set your 4-digit PIN here
+
+        function unlock() {
+            const pinInput = document.getElementById("pin-input").value;
+            const pinError = document.getElementById("pin-error");
+            const predictionContainer = document.getElementById("prediction-container");
+            const pinContainer = document.getElementById("pin-container");
+
+            if (pinInput === PIN) {
+                pinContainer.style.display = "none";
+                predictionContainer.style.display = "block";
+            } else {
+                pinError.style.display = "block";
+            }
+        }
+
+        function predict() {
+            // Get input values
+            const teamAGoals = parseFloat(document.getElementById('teamA-goals').value);
+            const teamAGoalsConceded = parseFloat(document.getElementById('teamA-goals-conceded').value);
+            const teamAPercentage = parseFloat(document.getElementById('teamA-percentage').value);
+            const teamATmp = parseFloat(document.getElementById('teamA-tmp').value);
+
+            const teamBGoals = parseFloat(document.getElementById('teamB-goals').value);
+            const teamBGoalsConceded = parseFloat(document.getElementById('teamB-goals-conceded').value);
+            const teamBPercentage = parseFloat(document.getElementById('teamB-percentage').value);
+            const teamBTmp = parseFloat(document.getElementById('teamB-tmp').value);
+
+            // Enhanced AI logic for prediction
+            const avgGoalsScored = (teamAGoals + teamBGoals) / 2;
+            const avgGoalsConceded = (teamAGoalsConceded + teamBGoalsConceded) / 2;
+            const avgPercentage = (teamAPercentage + teamBPercentage) / 2;
+            const tmpDifference = Math.abs(teamATmp - teamBTmp);
+
+            // Introduce a random uncertainty factor to account for unpredictability
+            const uncertaintyFactor = Math.random() * 10;
+
+            // Calculate likelihood percentage (weighted formula)
+            let likelihood = (avgPercentage * 0.4) + (avgGoalsScored * 0.3) - (avgGoalsConceded * 0.2) + (tmpDifference * 0.1) + uncertaintyFactor;
+
+            // Normalize likelihood to a range of 0-100
+            likelihood = Math.min(Math.max(likelihood, 0), 100);
+
+            // Generate prediction
+            let prediction = `Prediction: ${likelihood.toFixed(2)}% chance of over 3.5 goals. `;
+            if (likelihood > 75) {
+                prediction += "High probability of over 3.5 goals.";
+            } else if (likelihood > 50) {
+                prediction += "Moderate probability of over 3.5 goals.";
+            } else {
+                prediction += "Low probability of over 3.5 goals.";
+            }
+
+            // Display the prediction
+            const resultElement = document.getElementById('prediction-result');
+            resultElement.innerHTML = prediction;
+        }
+    </script>
+</body>
+</html>
