@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Match Prediction</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background: #28a745;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Form Container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #28a745;
+            border-bottom: 2px solid #f4f4f9;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Result Section */
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result span {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Soccer Match Prediction</h1>
+    </header>
+
+    <div class="container">
+        <form id="predictionForm">
+            <h2>Team A (Home) Stats</h2>
+            <label for="teamA-goals-scored">Goals Scored (Average):</label>
+            <input type="number" id="teamA-goals-scored" step="0.01" required>
+            
+            <label for="teamA-goals-conceded">Goals Conceded (Average):</label>
+            <input type="number" id="teamA-goals-conceded" step="0.01" required>
+            
+            <label for="teamA-clean-sheets">Clean Sheets (%):</label>
+            <input type="number" id="teamA-clean-sheets" step="1" required>
+            
+            <label for="teamA-team-scored">Team Scored (%):</label>
+            <input type="number" id="teamA-team-scored" step="1" required>
+            
+            <label for="teamA-winning">Winning (%):</label>
+            <input type="number" id="teamA-winning" step="1" required>
+            
+            <label for="teamA-draw">Draw (%):</label>
+            <input type="number" id="teamA-draw" step="1" required>
+            
+            <label for="teamA-lose">Lose (%):</label>
+            <input type="number" id="teamA-lose" step="1" required>
+            
+            <h2>Team B (Away) Stats</h2>
+            <label for="teamB-goals-scored">Goals Scored (Average):</label>
+            <input type="number" id="teamB-goals-scored" step="0.01" required>
+            
+            <label for="teamB-goals-conceded">Goals Conceded (Average):</label>
+            <input type="number" id="teamB-goals-conceded" step="0.01" required>
+            
+            <label for="teamB-clean-sheets">Clean Sheets (%):</label>
+            <input type="number" id="teamB-clean-sheets" step="1" required>
+            
+            <label for="teamB-team-scored">Team Scored (%):</label>
+            <input type="number" id="teamB-team-scored" step="1" required>
+            
+            <label for="teamB-winning">Winning (%):</label>
+            <input type="number" id="teamB-winning" step="1" required>
+            
+            <label for="teamB-draw">Draw (%):</label>
+            <input type="number" id="teamB-draw" step="1" required>
+            
+            <label for="teamB-lose">Lose (%):</label>
+            <input type="number" id="teamB-lose" step="1" required>
+            
+            <button type="button" onclick="makePrediction()">Get Prediction</button>
+        </form>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function makePrediction() {
+            // Collect form data
+            const teamA = {
+                goalsScored: parseFloat(document.getElementById('teamA-goals-scored').value),
+                goalsConceded: parseFloat(document.getElementById('teamA-goals-conceded').value),
+                cleanSheets: parseFloat(document.getElementById('teamA-clean-sheets').value),
+                teamScored: parseFloat(document.getElementById('teamA-team-scored').value),
+                winning: parseFloat(document.getElementById('teamA-winning').value),
+                draw: parseFloat(document.getElementById('teamA-draw').value),
+                lose: parseFloat(document.getElementById('teamA-lose').value)
+            };
+
+            const teamB = {
+                goalsScored: parseFloat(document.getElementById('teamB-goals-scored').value),
+                goalsConceded: parseFloat(document.getElementById('teamB-goals-conceded').value),
+                cleanSheets: parseFloat(document.getElementById('teamB-clean-sheets').value),
+                teamScored: parseFloat(document.getElementById('teamB-team-scored').value),
+                winning: parseFloat(document.getElementById('teamB-winning').value),
+                draw: parseFloat(document.getElementById('teamB-draw').value),
+                lose: parseFloat(document.getElementById('teamB-lose').value)
+            };
+
+            // Prediction logic (replace this with actual logic)
+            let result = '';
+            if (teamA.goalsScored > teamB.goalsConceded && teamA.winning > teamB.losing) {
+                result = '<span>Team A</span> is predicted to win!';
+            } else if (teamB.goalsScored > teamA.goalsConceded && teamB.winning > teamA.losing) {
+                result = '<span>Team B</span> is predicted to win!';
+            } else {
+                result = 'The match is likely to end in a <span>draw</span>.';
+            }
+
+            // Display result
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</body>
+</html>
