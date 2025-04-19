@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Match Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Football Match Prediction</h1>
+        <form id="predictionForm">
+            <label for="teamAStats">Team A Stats (Goals Scored, Goals Conceded, Clean Sheets %, Table Position):</label>
+            <input type="text" id="teamAStats" placeholder="e.g., 1.20, 2.00, 10, 17" required>
+            
+            <label for="teamBStats">Team B Stats (Goals Scored, Goals Conceded, Clean Sheets %, Table Position):</label>
+            <input type="text" id="teamBStats" placeholder="e.g., 0.90, 2.10, 10, 20" required>
+            
+            <button type="button" onclick="predict()">Predict Match Result</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function predict() {
+            const teamAStats = document.getElementById('teamAStats').value.split(',').map(Number);
+            const teamBStats = document.getElementById('teamBStats').value.split(',').map(Number);
+
+            if (teamAStats.length !== 4 || teamBStats.length !== 4) {
+                alert('Please enter all stats for both teams in the correct format.');
+                return;
+            }
+
+            const [teamAGoalsScored, teamAGoalsConceded, teamACleanSheets, teamATablePosition] = teamAStats;
+            const [teamBGoalsScored, teamBGoalsConceded, teamBCleanSheets, teamBTablePosition] = teamBStats;
+
+            // Calculate the predicted score
+            const teamAPredictedGoals = (teamAGoalsScored + teamBGoalsConceded) / 2;
+            const teamBPredictedGoals = (teamBGoalsScored + teamAGoalsConceded) / 2;
+
+            // Determine the result
+            let resultText = `Predicted Score: Team A ${teamAPredictedGoals.toFixed(1)} - ${teamBPredictedGoals.toFixed(1)} Team B.`;
+
+            if (teamAPredictedGoals > teamBPredictedGoals) {
+                resultText += ' Team A is predicted to win.';
+            } else if (teamAPredictedGoals < teamBPredictedGoals) {
+                resultText += ' Team B is predicted to win.';
+            } else {
+                resultText += ' The match is predicted to be a draw.';
+            }
+
+            document.getElementById('result').innerText = resultText;
+        }
+    </script>
+</body>
+</html>
