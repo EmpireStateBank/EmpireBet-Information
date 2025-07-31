@@ -2,75 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Match Prediction</title>
+    <meta name="viewport" content="width=1024, initial-scale=1.0">
+    <title>EmpireBet Information</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            min-height: 100vh;
+            min-width: 100vw;
+            background:
+                linear-gradient(120deg, rgba(30,40,60,0.90) 75%, rgba(0,0,0,.94) 100%),
+                url('watermark.png') center center/cover no-repeat fixed;
+            font-family: 'Segoe UI', 'Montserrat', Arial, sans-serif;
+            color: #f4f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container {
-            max-width: 600px;
-            margin: auto;
+        .main-content {
+            background: rgba(28, 38, 54, 0.97);
+            border-radius: 18px;
+            box-shadow: 0 8px 40px 0 rgba(20, 80, 180, 0.22);
+            width: 760px;
+            padding: 2.7rem 2.8rem 2.4rem 2.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
         }
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
+        .company-header {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #25d6cf;
+            letter-spacing: 3.5px;
+            text-align: center;
+            margin-bottom: 0.4rem;
+            text-shadow: 0 2px 12px rgba(37,214,207,0.09);
         }
-        .result {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffcb52;
+            margin: 0.3rem 0 1.1rem 0;
+            text-align: center;
+            letter-spacing: .6px;
+        }
+        .info-section {
+            font-size: 1.09rem;
+            color: #eafcff;
+            background: rgba(36, 45, 65, 0.82);
+            border-radius: 11px;
+            padding: 1.1rem 1.7rem 1.1rem 1.7rem;
+            margin-bottom: 0.3rem;
+            line-height: 1.7;
+        }
+        .notice-section {
+            margin-top: 0.8rem;
+            background: linear-gradient(90deg, #1e293b 85%, #232d3e 100%);
+            border-left: 7px solid #25d6cf;
+            border-radius: 10px;
+            padding: 1.08rem 1.35rem 1.08rem 1.6rem;
+            font-size: 1.05rem;
+            color: #b3faff;
+        }
+        .notice-title {
+            font-weight: bold;
+            color: #25d6cf;
+            font-size: 1.15em;
+            display: block;
+            margin-bottom: 0.4em;
+            letter-spacing: 1.2px;
+        }
+        .site-link {
+            display: block;
+            margin: 2.1rem auto 0 auto;
+            font-size: 1.13rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(90deg, #17c4ec 0%, #25d6cf 100%);
+            padding: 0.95em 2.8em;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 2px 16px rgba(23, 196, 236, 0.16);
+            transition: background 0.2s, transform 0.12s;
+            width: fit-content;
+        }
+        .site-link:hover, .site-link:focus {
+            background: linear-gradient(90deg, #25d6cf 0%, #17c4ec 100%);
+            color: #fffae0;
+            transform: scale(1.03);
+        }
+        @media (max-width: 900px) {
+            .main-content {
+                width: 97vw;
+                padding: 1.2rem 0.3rem 1.1rem 0.3rem;
+            }
+            .company-header {
+                font-size: 1.27rem;
+            }
+            h1 {
+                font-size: 1rem;
+            }
+            .info-section, .notice-section {
+                font-size: 0.98rem;
+                padding: 1rem 0.9rem 1rem 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Football Match Prediction</h1>
-        <form id="predictionForm">
-            <label for="teamAStats">Team A Stats (Goals Scored, Goals Conceded, Clean Sheets %, Table Position):</label>
-            <input type="text" id="teamAStats" placeholder="e.g., 1.20, 2.00, 10, 17" required>
-            
-            <label for="teamBStats">Team B Stats (Goals Scored, Goals Conceded, Clean Sheets %, Table Position):</label>
-            <input type="text" id="teamBStats" placeholder="e.g., 0.90, 2.10, 10, 20" required>
-            
-            <button type="button" onclick="predict()">Predict Match Result</button>
-        </form>
-        <div id="result" class="result"></div>
+    <div class="main-content">
+        <div class="company-header">EmpireStateBank</div>
+        <h1>EmpireBet Program Updates</h1>
+        <div class="info-section">
+            All EmpireBet programs are ready and optimized for your success. Our Rollover Football Betting Tips offer highly accurate predictions, putting you at a real advantage. To get started, simply log in with your PIN, or subscribe if you do not have an account yet. <br>
+            Subscriptions open on the 1st day of every month.
+        </div>
+        <div class="info-section">
+            EmpireBet Football ODD Trading is now available! Take part in trading with a proven 90% winning accuracy. For best results, always fund your wallet before you begin. <br>
+            Trading sessions run from Monday to Thursday, starting at 23:00. Please ensure you make your trades on time. Results are uploaded every Sunday at 17:00.
+        </div>
+        <div class="notice-section">
+            <span class="notice-title">Notice</span>
+            For a smooth and profitable experience with EmpireBet, please ensure your wallet is funded before trading. Trading is open from Monday to Thursday at 23:00, and results are published every Sunday at 17:00. Follow these guidelines for the best results and to maximize your profit potential. Stay updated, trade responsibly, and benefit from our trusted accuracy and reliability.
+        </div>
+        <a class="site-link" href="https://your-site-link.com" target="_blank" rel="noopener">
+            Visit the Site Now
+        </a>
     </div>
-
-    <script>
-        function predict() {
-            const teamAStats = document.getElementById('teamAStats').value.split(',').map(Number);
-            const teamBStats = document.getElementById('teamBStats').value.split(',').map(Number);
-
-            if (teamAStats.length !== 4 || teamBStats.length !== 4) {
-                alert('Please enter all stats for both teams in the correct format.');
-                return;
-            }
-
-            const [teamAGoalsScored, teamAGoalsConceded, teamACleanSheets, teamATablePosition] = teamAStats;
-            const [teamBGoalsScored, teamBGoalsConceded, teamBCleanSheets, teamBTablePosition] = teamBStats;
-
-            // Calculate the predicted score
-            const teamAPredictedGoals = (teamAGoalsScored + teamBGoalsConceded) / 2;
-            const teamBPredictedGoals = (teamBGoalsScored + teamAGoalsConceded) / 2;
-
-            // Determine the result
-            let resultText = `Predicted Score: Team A ${teamAPredictedGoals.toFixed(1)} - ${teamBPredictedGoals.toFixed(1)} Team B.`;
-
-            if (teamAPredictedGoals > teamBPredictedGoals) {
-                resultText += ' Team A is predicted to win.';
-            } else if (teamAPredictedGoals < teamBPredictedGoals) {
-                resultText += ' Team B is predicted to win.';
-            } else {
-                resultText += ' The match is predicted to be a draw.';
-            }
-
-            document.getElementById('result').innerText = resultText;
-        }
-    </script>
 </body>
 </html>
